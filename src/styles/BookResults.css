@@ -42,10 +42,17 @@
 }
 
 .book-card__cover {
+  display: grid;
+  place-items: center;
   width: 100%;
   aspect-ratio: 2 / 3;
   object-fit: cover;
   background: var(--code-bg);
+}
+
+.book-card__cover--empty {
+  color: var(--text);
+  font-size: 14px;
 }
 
 .book-card__body {

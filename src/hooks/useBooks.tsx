@@ -5,10 +5,8 @@ import { getBooksAsync } from "../services/BookService";
 export const useBooks = () => {
     const [books, setBooks] = useState<BookReference[]>([]);
     const [hasError, setHasError] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
 
     const searchBooks = async (query: string) => {
-        setIsLoading(true);
         setHasError(false);
 
         try {
@@ -18,10 +16,8 @@ export const useBooks = () => {
             console.error(error);
             setHasError(true);
             setBooks([]);
-        } finally {
-            setIsLoading(false);
         }
     };
 
-    return { books, hasError, isLoading, searchBooks };
+    return { books, hasError, searchBooks };
 };

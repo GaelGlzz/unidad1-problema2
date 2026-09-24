@@ -7,7 +7,7 @@ import SearchHistory from "./SearchHistory";
 
 function BookSearch() {
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
-  const { books, hasError, isLoading, searchBooks } = useBooks();
+  const { books, hasError, searchBooks } = useBooks();
 
   const guardarBusqueda = async (query: string) => {
     setRecentSearches((searches) => [query, ...searches.filter((search) => search !== query)]);
@@ -24,8 +24,8 @@ function BookSearch() {
         </p>
       </header>
       <SearchBar onSearch={guardarBusqueda} />
-      <SearchHistory searches={recentSearches} />
-      <BookResults books={books} hasError={hasError} isLoading={isLoading} query={recentSearches[0] ?? ""} />
+      <SearchHistory searches={recentSearches} onSelect={guardarBusqueda} />
+      <BookResults books={books} hasError={hasError} query={recentSearches[0] ?? ""} />
     </main>
   );
 }

@@ -4,17 +4,16 @@ import { type BookReference } from "../types/bookType";
 type BookResultsProps = {
   books: BookReference[];
   hasError: boolean;
-  isLoading: boolean;
   query: string;
 };
 
-function BookResults({ books, hasError, isLoading, query }: BookResultsProps) {
+function BookResults({ books, hasError, query }: BookResultsProps) {
   return (
     <section className="book-results" aria-label="Resultados de libros">
       <div className="book-results__header">
         <h2 className="book-results__title">Resultados</h2>
         <p className="book-results__count">
-          {isLoading ? "Buscando..." : `${books.length} libros${query ? ` para “${query}”` : ""}`}
+          {`${books.length} libros${query ? ` para “${query}”` : ""}`}
         </p>
       </div>
       {hasError && <p>No se pudieron cargar los libros. Intenta de nuevo.</p>}
@@ -22,11 +21,17 @@ function BookResults({ books, hasError, isLoading, query }: BookResultsProps) {
         {books.map((book) => (
           <li key={book.key}>
             <article className="book-card">
-              <img
-                className="book-card__cover"
-                src={book.cover_i ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg` : ""}
-                alt={`Portada de ${book.title}`}
-              />
+              {book.cover_i ? (
+                <img
+                  className="book-card__cover"
+                  src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
+                  alt={`Portada de ${book.title}`}
+                />
+              ) : (
+                <div className="book-card__cover book-card__cover--empty" aria-hidden="true">
+                  Sin portada
+                </div>
+              )}
               <div className="book-card__body">
                 <h3 className="book-card__title">{book.title}</h3>
                 <p className="book-card__author">{book.author_name?.[0] ?? "Autor desconocido"}</p>
